@@ -16,8 +16,8 @@ const SignIn = () => {
 
 
     return (
-        <div>
-            <h1>This is sign in component</h1>
+        <div >
+            <h1>Sign in</h1>
             <button onClick={logGoogleUser}>Click to Sign in with Google Popup</button>
             <SignUpForm />
         </div>

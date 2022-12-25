@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
+import {
+    getAuth,
+    signInWithPopup,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword
+} from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -26,7 +32,7 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) => {
     const userDocReference = doc(db, 'users', userAuth.uid);
 
 
@@ -41,13 +47,27 @@ export const createUserDocumentFromAuth = async (userAuth) => {
             await setDoc(userDocReference, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInfo
             });
 
         } catch (error) {
-            console.log('there was an error creating the user', error.message)
+            if (error.code === 'auth/email-already-in-use') {
+                alert('Error creating user, email already in use')
+            } else {
+                console.log('there was an error creating the user', error.message)
+            }
+
         }
     }
     return userDocReference;
 
 }
+
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
+}
+
