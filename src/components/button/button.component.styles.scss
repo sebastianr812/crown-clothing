@@ -9,7 +9,7 @@
     background-color: black;
     color: white;
     text-transform: uppercase;
-    font-family: 'Open Sans Condensed';
+    font-family: 'Open Sans';
     font-weight: bolder;
     border: none;
     cursor: pointer;
@@ -42,5 +42,9 @@
             color: white;
             border: none;
         }
+    }
+
+    #cart-button {
+        padding: 0 !important;
     }
 }
