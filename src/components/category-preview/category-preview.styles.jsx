@@ -7,17 +7,16 @@ export const CategoryPreviewContainer = styled.div`
     margin-bottom: 30px;
 `
 
-export const StyledLink = styled(Link)`
-
-    font - size: 28px;
-    margin - bottom: 25px;
+export const Title = styled(Link)`
+    font-size: 28px;
+    margin-bottom: 25px;
     cursor: pointer;
-
 `
 
-export const PreviewContainer = styled.div`
+export const Preview = styled.div`
     display: grid;
-    grid - template - columns: repeat(4, 1fr);
-    column - gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
 `
+
 
