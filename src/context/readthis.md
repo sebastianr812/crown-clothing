@@ -1,0 +1,1 @@
+These are the files for when this app was using react context - I migrated to using redux but will keep these here so in the future if i need to use react context I can reference this code
