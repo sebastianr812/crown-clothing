@@ -63,14 +63,15 @@ export const getCategoriesAndDocuments = async () => {
 
     const q = query(collectionReference);
     const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((total, docSnapshot) => {
-        const { title, items } = docSnapshot.data();
+    // const categoryMap = querySnapshot.docs.reduce((total, docSnapshot) => {
+    //     const { title, items } = docSnapshot.data();
 
-        total[title.toLowerCase()] = items;
-        return total;
-    }, {})
+    //     total[title.toLowerCase()] = items;
+    //     return total;
+    // }, {})
 
-    return categoryMap;
+    return querySnapshot.docs.map(docSnapShot => docSnapShot.data());
+
 }
 
 
@@ -102,7 +103,7 @@ export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) 
 
         }
     }
-    return userDocReference;
+    return userSnapShot;
 
 }
 
@@ -124,5 +125,18 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => {
     onAuthStateChanged(auth, callback)
+}
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unSubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unSubscribe();
+                resolve(userAuth);
+            },
+            reject
+        )
+    })
 }
 
