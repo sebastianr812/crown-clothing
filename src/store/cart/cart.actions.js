@@ -55,3 +55,6 @@ export const clearItemFromCart = (cartItems, cartItemToRemove) => {
     return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 
 }
+
+export const returnCartToDefault = () =>
+    createAction(CART_ACTION_TYPES.RETURN_TO_DEFAULT)

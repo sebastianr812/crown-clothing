@@ -1,10 +1,16 @@
 require("dotenv").config();
-const stripe = require("stripe")('sk_test_51MNJbAA21suNN2kreCFZ6MRRQsWipZFml3bLOuNJqdmmZWRIXXgWaC5OOmCpcML5ZelN8XfxuVKTtrL0xqf0vpEd00wcKWgbFD');
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 exports.handler = async (event) => {
     try {
 
-        const { amount } = JSON.parse(event.body);
+        // temporary to decode the base 64 since 
+        // it's not working exactly like it does in the vid
+        // const {amount } = JSON.parse(event.body);
+        /////////////////////////////////////////
+        const decodedBody = atob(event.body);
+        //////////////////////////////////////////
+        const { amount } = JSON.parse(decodedBody);
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
@@ -14,7 +20,7 @@ exports.handler = async (event) => {
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ amount }),
+            body: JSON.stringify({ paymentIntent }),
         };
     } catch (error) {
         console.log({ error });
