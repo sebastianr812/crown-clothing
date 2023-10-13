@@ -17,7 +17,7 @@ const Shop = () => {
 
         dispatch(fetchCategoriesStart());
 
-    }, [dispatch]);
+    }, []);
 
 
     return (
